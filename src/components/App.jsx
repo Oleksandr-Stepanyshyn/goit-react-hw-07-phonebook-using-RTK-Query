@@ -82,7 +82,7 @@ Filter.propTypes = {
   onChange: PropTypes.func.isRequired
 }
 
-ContactList.protoType = {
+ContactList.protoTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.string.isRequired,

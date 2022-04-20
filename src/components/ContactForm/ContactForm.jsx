@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { MyForm, Label, Input, Button } from './ContactForm.styled';
@@ -48,4 +49,8 @@ export const ContactForm = ({addContact}) => {
 
     </Formik>
   )
+}
+
+ContactForm.propTypes ={
+  addContact: PropTypes.func.isRequired
 }
