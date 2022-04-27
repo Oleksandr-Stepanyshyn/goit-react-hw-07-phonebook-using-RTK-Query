@@ -39,8 +39,8 @@ export class App extends Component {
       name,
       number,
     }
-    const currentName = name;
-    const matchName = this.state.contacts.some(({name}) => name===currentName);
+    const currentName = name.toLowerCase();
+    const matchName = this.state.contacts.some(({name}) => name.toLowerCase()===currentName);
 
     matchName 
       ? alert(`${name} is already in contacts`)
