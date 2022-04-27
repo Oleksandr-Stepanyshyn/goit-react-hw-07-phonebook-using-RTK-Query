@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { ContactItem } from '../ContactItem/ContactItem';
-import { Contacts } from "./ContactList.styled"
+import { Contacts } from './ContactList.styled';
 
-export const ContactList = ({contacts, onDeleteContact}) => {
-  return(
+export const ContactList = ({ contacts, onDeleteContact }) => {
+  return (
     <Contacts>
-      {contacts.map(({id, name, number}) => (
+      {contacts.map(({ id, name, number }) => (
         <ContactItem
           key={id}
           name={name}
@@ -14,17 +14,16 @@ export const ContactList = ({contacts, onDeleteContact}) => {
         />
       ))}
     </Contacts>
-  )
-}
-
+  );
+};
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired
+      number: PropTypes.string.isRequired,
     })
   ),
-  onDeleteContact: PropTypes.func.isRequired
+  onDeleteContact: PropTypes.func.isRequired,
 };
