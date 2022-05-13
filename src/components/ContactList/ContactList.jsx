@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
+import { useContacts } from 'redux/contactsSlice';
 import { ContactItem } from '../ContactItem/ContactItem';
 import { Contacts } from './ContactList.styled';
 
-export const ContactList = ({ contacts, onDeleteContact }) => {
+export const ContactList = ({ contacts }) => {
+  const { deleteContact } = useContacts();
   return (
     <Contacts>
       {contacts.map(({ id, name, number }) => (
@@ -10,7 +12,7 @@ export const ContactList = ({ contacts, onDeleteContact }) => {
           key={id}
           name={name}
           number={number}
-          onDeleteContact={() => onDeleteContact(id)}
+          onDeleteContact={() => deleteContact(id)}
         />
       ))}
     </Contacts>
@@ -25,5 +27,4 @@ ContactList.propTypes = {
       number: PropTypes.string.isRequired,
     })
   ),
-  onDeleteContact: PropTypes.func.isRequired,
 };

@@ -1,14 +1,12 @@
 import { nanoid } from 'nanoid';
+import { useContacts } from 'redux/contactsSlice';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { PhoneBook, Title, ContactsTitle } from './App.styled';
 
-import { useContacts } from 'redux/contactsSlice';
-
 export const App = () => {
-  const { contacts, filter, setContact, deleteContact, filtrate } =
-    useContacts();
+  const { contacts, filter, setContact } = useContacts();
 
   const addContact = (name, number) => {
     const contact = {
@@ -25,16 +23,7 @@ export const App = () => {
     matchName ? alert(`${name} is already in contacts`) : setContact(contact);
   };
 
-  const handleDelete = contactId => {
-    deleteContact(contactId);
-  };
-
-  const handleNameChange = e => {
-    filtrate(e.currentTarget.value);
-  };
-
   const getVisibleContacts = () => {
-    console.log(filter);
     const normalizedFilter = filter.toLowerCase();
     return contacts.filter(({ name }) =>
       name.toLowerCase().includes(normalizedFilter)
@@ -46,31 +35,8 @@ export const App = () => {
       <Title>Phonebook</Title>
       <ContactForm addContact={addContact} />
       <ContactsTitle>Contacts</ContactsTitle>
-      <Filter value={filter} onChange={handleNameChange} />
-      <ContactList
-        contacts={getVisibleContacts()}
-        onDeleteContact={handleDelete}
-      />
+      <Filter value={filter} />
+      <ContactList contacts={getVisibleContacts()} />
     </PhoneBook>
   );
 };
-
-// ContactForm.propTypes = {
-//   addContact: PropTypes.func.isRequired,
-// };
-
-// Filter.propTypes = {
-//   value: PropTypes.string.isRequired,
-//   onChange: PropTypes.func.isRequired,
-// };
-
-// ContactList.protoTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.exact({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     })
-//   ),
-//   onDeleteContact: PropTypes.func.isRequired,
-// };
