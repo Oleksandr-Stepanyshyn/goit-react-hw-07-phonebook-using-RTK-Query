@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
 import { useContacts } from 'redux/contactsSlice';
 import { ContactItem } from '../ContactItem/ContactItem';
 import { Contacts } from './ContactList.styled';
 
-export const ContactList = ({ contacts }) => {
-  const { deleteContact } = useContacts();
+export const ContactList = () => {
+  const { deleteContact, getVisibleContacts } = useContacts();
+  const contacts = getVisibleContacts();
   return (
     <Contacts>
       {contacts.map(({ id, name, number }) => (
@@ -17,14 +17,4 @@ export const ContactList = ({ contacts }) => {
       ))}
     </Contacts>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
 };

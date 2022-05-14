@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import { Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { MyForm, Label, Input, Button } from './ContactForm.styled';
+import { useContacts } from 'redux/contactsSlice';
 
 const validateValue = {
   name: {
@@ -36,12 +36,14 @@ const schema = yup.object().shape({
     .required(),
 });
 
-export const ContactForm = ({ addContact }) => {
+export const ContactForm = () => {
+  const { addContact } = useContacts();
   const handleSubmit = (values, { resetForm }) => {
     const { name, number } = values;
     addContact(name, number);
     resetForm();
   };
+
   return (
     <Formik
       initialValues={initialValue}
@@ -63,8 +65,4 @@ export const ContactForm = ({ addContact }) => {
       </MyForm>
     </Formik>
   );
-};
-
-ContactForm.propTypes = {
-  addContact: PropTypes.func.isRequired,
 };
