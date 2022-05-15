@@ -1,7 +1,7 @@
 import { Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { MyForm, Label, Input, Button } from './ContactForm.styled';
-import { useContacts } from 'redux/contactsSlice';
+import { useContacts } from 'Hooks/useContacts';
 
 const validateValue = {
   name: {

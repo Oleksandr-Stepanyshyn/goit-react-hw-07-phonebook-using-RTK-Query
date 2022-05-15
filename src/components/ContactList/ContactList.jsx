@@ -1,4 +1,4 @@
-import { useContacts } from 'redux/contactsSlice';
+import { useContacts } from 'Hooks/useContacts';
 import { ContactItem } from '../ContactItem/ContactItem';
 import { Contacts } from './ContactList.styled';
 

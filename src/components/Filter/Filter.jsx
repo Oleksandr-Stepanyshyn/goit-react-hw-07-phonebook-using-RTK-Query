@@ -1,4 +1,4 @@
-import { useContacts } from 'redux/contactsSlice';
+import { useContacts } from 'Hooks/useContacts';
 import { FilterLabel, FilterInput } from './Filter.styled';
 
 export const Filter = () => {
