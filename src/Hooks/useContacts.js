@@ -1,21 +1,16 @@
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  addItem,
-  deleteItem,
-  setFilter,
-  getItems,
-  getFilter,
-} from '../redux/contactsSlice';
+import { contactsActions, contactsSelectors } from 'redux/contacts';
 
 export const useContacts = () => {
-  const contacts = useSelector(getItems);
-  const filter = useSelector(getFilter);
+  const contacts = useSelector(contactsSelectors.getItems);
+  const filter = useSelector(contactsSelectors.getFilter);
   const dispatch = useDispatch();
 
-  const setContact = contact => dispatch(addItem(contact));
-  const deleteContact = contactId => dispatch(deleteItem(contactId));
-  const filtrate = value => dispatch(setFilter(value));
+  const setContact = contact => dispatch(contactsActions.addItem(contact));
+  const deleteContact = contactId =>
+    dispatch(contactsActions.deleteItem(contactId));
+  const filtrate = value => dispatch(contactsActions.setFilter(value));
 
   const addContact = (name, number) => {
     const contact = {

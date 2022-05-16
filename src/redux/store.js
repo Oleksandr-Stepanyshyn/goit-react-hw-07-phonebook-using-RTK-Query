@@ -8,11 +8,11 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { persistedContactsReduser } from './contactsSlice';
+import { contactsReducer } from './contacts';
 
 export const store = configureStore({
   reducer: {
-    contacts: persistedContactsReduser,
+    contacts: contactsReducer.persistedContactsReduser,
   },
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware({
