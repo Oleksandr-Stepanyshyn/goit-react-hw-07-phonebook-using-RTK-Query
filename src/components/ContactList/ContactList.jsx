@@ -7,11 +7,11 @@ export const ContactList = () => {
   const contacts = getVisibleContacts();
   return (
     <Contacts>
-      {contacts.map(({ id, name, number }) => (
+      {contacts.map(({ id, name, phone }) => (
         <ContactItem
           key={id}
           name={name}
-          number={number}
+          number={phone}
           onDeleteContact={() => deleteContact(id)}
         />
       ))}

@@ -1,22 +1,25 @@
-import { nanoid } from 'nanoid';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { contactsActions, contactsSelectors } from 'redux/contacts';
+import * as contactsOperations from 'redux/contacts/contactsOperations';
 
 export const useContacts = () => {
   const contacts = useSelector(contactsSelectors.getItems);
   const filter = useSelector(contactsSelectors.getFilter);
   const dispatch = useDispatch();
 
-  const setContact = contact => dispatch(contactsActions.addItem(contact));
+  useEffect(() => {
+    dispatch(contactsOperations.fetchContacts());
+  }, [dispatch]);
+
   const deleteContact = contactId =>
-    dispatch(contactsActions.deleteItem(contactId));
+    dispatch(contactsOperations.deleteContact(contactId));
   const filtrate = value => dispatch(contactsActions.setFilter(value));
 
-  const addContact = (name, number) => {
+  const addContact = (name, phone) => {
     const contact = {
-      id: nanoid(),
       name,
-      number,
+      phone,
     };
 
     const currentName = name.toLowerCase();
@@ -24,7 +27,9 @@ export const useContacts = () => {
       ({ name }) => name.toLowerCase() === currentName
     );
 
-    matchName ? alert(`${name} is already in contacts`) : setContact(contact);
+    matchName
+      ? alert(`${name} is already in contacts`)
+      : dispatch(contactsOperations.postContact(contact));
   };
 
   const getVisibleContacts = () => {
