@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const PhoneBook = styled.div`
-margin: 0 auto;
-width: 300px;
+  margin: 0 auto;
+  width: 350px;
 `;
 
 export const Title = styled.h1`

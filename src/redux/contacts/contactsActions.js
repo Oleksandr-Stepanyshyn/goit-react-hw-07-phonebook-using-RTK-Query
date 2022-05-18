@@ -1,3 +1,3 @@
 import { contactsSlice } from './contactsSlice';
 
-export const { addItem, deleteItem, setFilter } = contactsSlice.actions;
+export const { setFilter } = contactsSlice.actions;

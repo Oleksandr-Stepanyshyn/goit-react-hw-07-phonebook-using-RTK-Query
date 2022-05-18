@@ -6,6 +6,7 @@ import * as contactsOperations from 'redux/contacts/contactsOperations';
 export const useContacts = () => {
   const contacts = useSelector(contactsSelectors.getItems);
   const filter = useSelector(contactsSelectors.getFilter);
+  const isLoading = useSelector(contactsSelectors.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,5 +46,6 @@ export const useContacts = () => {
     deleteContact,
     filtrate,
     getVisibleContacts,
+    isLoading,
   };
 };

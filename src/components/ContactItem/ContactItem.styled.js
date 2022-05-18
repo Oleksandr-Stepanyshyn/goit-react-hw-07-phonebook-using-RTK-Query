@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Contact = styled.li`
   display: flex;
@@ -8,6 +8,11 @@ export const Contact = styled.li`
   & + & {
     margin-top: 8px;
   }
+`;
+
+export const Phone = styled.a`
+  font-weight: 500;
+  margin-left: 12px;
 `;
 
 export const Button = styled.button`
