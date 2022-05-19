@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { contactsActions, contactsSelectors } from 'redux/contacts';
 import * as contactsOperations from 'redux/contacts/contactsOperations';
@@ -8,10 +7,6 @@ export const useContacts = () => {
   const filter = useSelector(contactsSelectors.getFilter);
   const isLoading = useSelector(contactsSelectors.isLoading);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(contactsOperations.fetchContacts());
-  }, [dispatch]);
 
   const deleteContact = contactId =>
     dispatch(contactsOperations.deleteContact(contactId));
