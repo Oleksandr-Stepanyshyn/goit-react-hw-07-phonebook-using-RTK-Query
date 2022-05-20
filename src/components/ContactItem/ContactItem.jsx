@@ -1,19 +1,18 @@
-import PropTypes from 'prop-types';
+import { useContacts } from 'Hooks/useContacts';
 import { Contact, Button, Phone } from './ContactItem.styled';
 
-export const ContactItem = ({ name, number, onDeleteContact }) => {
+export const ContactItem = () => {
+  const { visibleContacts, deleteContact } = useContacts();
   return (
-    <Contact>
-      {name}: <Phone href={`tel: ${number}`}>{number}</Phone>
-      <Button type="button" onClick={onDeleteContact}>
-        Delete
-      </Button>
-    </Contact>
+    <>
+      {visibleContacts.map(({ id, name, phone }) => (
+        <Contact key={id}>
+          {name}: <Phone href={`tel: ${phone}`}>{phone}</Phone>
+          <Button type="button" onClick={() => deleteContact(id)}>
+            Delete
+          </Button>
+        </Contact>
+      ))}
+    </>
   );
-};
-
-ContactItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
 };

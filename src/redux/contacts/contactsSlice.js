@@ -28,6 +28,7 @@ export const contactsSlice = createSlice({
     },
     [fetchContacts.rejected]: (state, action) => {
       state.error = action.payload;
+      state.isLoading = false;
     },
     [postContact.pending]: (state, action) => {
       state.isLoading = true;
@@ -38,6 +39,7 @@ export const contactsSlice = createSlice({
     },
     [postContact.rejected]: (state, action) => {
       state.error = action.payload;
+      state.isLoading = false;
     },
     [deleteContact.pending]: (state, action) => {
       state.isLoading = true;
@@ -48,6 +50,7 @@ export const contactsSlice = createSlice({
     },
     [deleteContact.rejected]: (state, action) => {
       state.error = action.payload;
+      state.isLoading = false;
     },
   },
 });

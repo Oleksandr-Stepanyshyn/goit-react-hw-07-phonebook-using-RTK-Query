@@ -7,26 +7,22 @@ import { useDispatch } from 'react-redux';
 import * as contactsOperations from 'redux/contacts/contactsOperations';
 
 export const ContactList = () => {
-  const { deleteContact, getVisibleContacts, isLoading } = useContacts();
+  const { isLoading, error } = useContacts();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(contactsOperations.fetchContacts());
   }, [dispatch]);
 
-  const contacts = getVisibleContacts();
   return (
     <Div>
-      <Contacts>
-        {contacts.map(({ id, name, phone }) => (
-          <ContactItem
-            key={id}
-            name={name}
-            number={phone}
-            onDeleteContact={() => deleteContact(id)}
-          />
-        ))}
-      </Contacts>
+      {error ? (
+        <h1>Something went wrong "{error?.message}", reload the page </h1>
+      ) : (
+        <Contacts>
+          <ContactItem />
+        </Contacts>
+      )}
       {isLoading && <Loader />}
     </Div>
   );

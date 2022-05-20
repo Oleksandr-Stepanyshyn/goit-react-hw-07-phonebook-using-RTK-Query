@@ -4,13 +4,16 @@ import * as contactsOperations from 'redux/contacts/contactsOperations';
 
 export const useContacts = () => {
   const contacts = useSelector(contactsSelectors.getItems);
+  const visibleContacts = useSelector(contactsSelectors.getVisibleContacts);
   const filter = useSelector(contactsSelectors.getFilter);
   const isLoading = useSelector(contactsSelectors.isLoading);
+  const error = useSelector(contactsSelectors.getError);
   const dispatch = useDispatch();
+
+  const filtrate = value => dispatch(contactsActions.setFilter(value));
 
   const deleteContact = contactId =>
     dispatch(contactsOperations.deleteContact(contactId));
-  const filtrate = value => dispatch(contactsActions.setFilter(value));
 
   const addContact = (name, phone) => {
     const contact = {
@@ -28,19 +31,13 @@ export const useContacts = () => {
       : dispatch(contactsOperations.postContact(contact));
   };
 
-  const getVisibleContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(({ name }) =>
-      name.toLowerCase().includes(normalizedFilter)
-    );
-  };
-
   return {
     filter,
     addContact,
     deleteContact,
     filtrate,
-    getVisibleContacts,
+    visibleContacts,
     isLoading,
+    error,
   };
 };
