@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { contactsActions, contactsSelectors } from 'redux/contacts';
 import * as contactsOperations from 'redux/contacts/contactsOperations';
@@ -27,7 +28,10 @@ export const useContacts = () => {
     );
 
     matchName
-      ? alert(`${name} is already in contacts`)
+      ? toast.warn(`${name} is already in contacts`, {
+          position: 'top-center',
+          autoClose: 3000,
+        })
       : dispatch(contactsOperations.postContact(contact));
   };
 

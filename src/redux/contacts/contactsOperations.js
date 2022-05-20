@@ -19,7 +19,7 @@ export const postContact = createAsyncThunk(
   async (contact, { rejectWithValue }) => {
     try {
       const response = await phoneBookApi.post(contact);
-      toast.success('new contact added', {
+      toast.success(`${contact.name} added to the contacts`, {
         position: 'top-center',
         autoClose: 3000,
       });
