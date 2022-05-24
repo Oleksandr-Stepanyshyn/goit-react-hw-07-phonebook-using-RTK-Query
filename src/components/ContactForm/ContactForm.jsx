@@ -1,5 +1,6 @@
 import { Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import { useLocalStorage } from 'react-use';
 import { MyForm, Label, Input, Button } from './ContactForm.styled';
 import { useContacts } from 'Hooks/useContacts';
 
@@ -37,10 +38,30 @@ const schema = yup.object().shape({
 });
 
 export const ContactForm = () => {
-  const { addContact } = useContacts();
+  // const [name, setName] = useLocalStorage('name', '');
+  // const [number, setNumber] = useLocalStorage('number', '');
+  const { setContact } = useContacts();
+
+  // const handleChange = e => {
+  //   const { name, value } = e.target;
+
+  //   switch (name) {
+  //     case 'name':
+  //       setName(value);
+  //       break;
+
+  //     case 'number':
+  //       setNumber(value);
+  //       break;
+
+  //     default:
+  //       break;
+  //   }
+  // };
+
   const handleSubmit = (values, { resetForm }) => {
     const { name, number } = values;
-    addContact(name, number);
+    setContact(name, number);
     resetForm();
   };
 
@@ -53,12 +74,20 @@ export const ContactForm = () => {
       <MyForm autoComplete="off">
         <Label htmlFor="name">
           Name
-          <Input type="text" name="name" />
+          <Input
+            type="text"
+            name="name"
+            // onChange={handleChange}
+          />
         </Label>
         <ErrorMessage name="name" component="div" />
         <Label htmlFor="number">
           Number
-          <Input type="tel" name="number" />
+          <Input
+            type="tel"
+            name="number"
+            // onChange={handleChange}
+          />
         </Label>
         <ErrorMessage name="number" component="div" />
         <Button type="submit">Add contact</Button>

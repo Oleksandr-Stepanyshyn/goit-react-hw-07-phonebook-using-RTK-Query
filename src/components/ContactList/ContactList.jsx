@@ -1,29 +1,34 @@
-import { useContacts } from 'Hooks/useContacts';
+// import { useContacts } from 'Hooks/useContacts';
 import { ContactItem } from '../ContactItem/ContactItem';
 import { Contacts, Div } from './ContactList.styled';
 import { Loader } from 'components/Loader/Loader';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import * as contactsOperations from 'redux/contacts/contactsOperations';
+import { useGetContactsQuery } from 'redux/contacts/contactsApi';
 
 export const ContactList = () => {
-  const { isLoading, error } = useContacts();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(contactsOperations.fetchContacts());
-  }, [dispatch]);
+  // const {
+  //   visibleContacts: contacts,
+  //   isFetchLoading,
+  //   fetchError,
+  // } = useContacts();
+  const { data: contacts, isLoading, error } = useGetContactsQuery();
 
   return (
     <Div>
-      {error ? (
-        <h1>Something went wrong "{error?.message}", reload the page </h1>
+      {error && (
+        <h1>
+          Something went wrong "status: {error?.originalStatus}", reload the
+          page
+        </h1>
+      )}
+      {isLoading ? (
+        <Loader />
       ) : (
         <Contacts>
-          <ContactItem />
+          <ContactItem
+          // contacts={contacts}
+          />
         </Contacts>
       )}
-      {isLoading && <Loader />}
     </Div>
   );
 };

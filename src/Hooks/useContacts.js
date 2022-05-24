@@ -1,22 +1,26 @@
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { contactsActions, contactsSelectors } from 'redux/contacts';
-import * as contactsOperations from 'redux/contacts/contactsOperations';
+import { filterActions, filterSelectors } from 'redux/filter';
+import {
+  useAddContactMutation,
+  useDeleteContactMutation,
+  useGetContactsQuery,
+} from 'redux/contacts/contactsApi';
 
 export const useContacts = () => {
-  const contacts = useSelector(contactsSelectors.getItems);
-  const visibleContacts = useSelector(contactsSelectors.getVisibleContacts);
-  const filter = useSelector(contactsSelectors.getFilter);
-  const isLoading = useSelector(contactsSelectors.isLoading);
-  const error = useSelector(contactsSelectors.getError);
+  const filter = useSelector(filterSelectors.getFilter);
+  const {
+    data: contacts,
+    isLoading: isFetchLoading,
+    fetchError,
+  } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
+  const [deleteContact] = useDeleteContactMutation();
   const dispatch = useDispatch();
 
-  const filtrate = value => dispatch(contactsActions.setFilter(value));
+  const filtrate = value => dispatch(filterActions.setFilter(value));
 
-  const deleteContact = contactId =>
-    dispatch(contactsOperations.deleteContact(contactId));
-
-  const addContact = (name, phone) => {
+  function setContact(name, phone) {
     const contact = {
       name,
       phone,
@@ -27,21 +31,31 @@ export const useContacts = () => {
       ({ name }) => name.toLowerCase() === currentName
     );
 
-    matchName
-      ? toast.warn(`${name} is already in contacts`, {
-          position: 'top-center',
-          autoClose: 3000,
-        })
-      : dispatch(contactsOperations.postContact(contact));
+    if (matchName) {
+      toast.warn(`${name} is already in contacts`, {
+        position: 'top-center',
+        autoClose: 3000,
+      });
+    } else {
+      addContact(contact);
+      toast.success('contact added');
+    }
+  }
+
+  const visibleContacts = () => {
+    const normalizedFilter = filter.toLowerCase();
+    return contacts?.filter(({ name }) =>
+      name.toLowerCase().includes(normalizedFilter)
+    );
   };
 
   return {
     filter,
-    addContact,
+    setContact,
     deleteContact,
     filtrate,
     visibleContacts,
-    isLoading,
-    error,
+    isFetchLoading,
+    fetchError,
   };
 };

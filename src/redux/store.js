@@ -1,15 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { reducer } from './contacts';
+import combineReducer from './combineReducer';
+import { contactsApi } from './contacts/contactsApi';
 
 export const store = configureStore({
-  reducer: {
-    contacts: reducer.contactsReducer,
-  },
-  // middleware(getDefaultMiddleware) {
-  //   return getDefaultMiddleware({
-  //     serializableCheck: {
-  //       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-  //     },
-  //   });
-  // },
+  reducer: combineReducer,
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware(),
+    contactsApi.middleware,
+  ],
 });
